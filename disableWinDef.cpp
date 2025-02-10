@@ -19,7 +19,7 @@ namespace DefenderSettings {
     const wchar_t* const DisableScanOnRealtimeEnableValueName = L"DisableScanOnRealtimeEnable";
     const wchar_t* const DisableOnAccessProtectionValueName = L"DisableOnAccessProtection";
     const wchar_t* const DisableIOAVProtectionValueName = L"DisableIOAVProtection";
-    const DWORD DisableValue = 1;  // Representing the 'disable' state. Using DWORD for registry consistency.
+    const DWORD DisableValue = 1; 
 }
 
 std::string getErrorMessage(DWORD errorCode) {
@@ -36,7 +36,7 @@ std::string getErrorMessage(DWORD errorCode) {
     if (buffer) {
         std::wstring message(buffer);
         LocalFree(buffer); // Free the allocated buffer
-        std::string result(message.begin(), message.end());  // Convert wstring to string
+        std::string result(message.begin(), message.end());  
         return result;
     } else {
         std::ostringstream oss;
@@ -59,7 +59,7 @@ public:
     }
 
     HKEY get() const { return handle; }
-    HKEY* getAddress() { return &handle; } // To pass the address for functions requiring HKEY*
+    HKEY* getAddress() { return &handle; } 
 
     RegKey(const RegKey&) = delete;
     RegKey& operator=(const RegKey&) = delete;
@@ -78,7 +78,7 @@ bool isUserAdmin() {
         return false;
     }
 
-    std::unique_ptr<void, decltype(&LocalFree)> sidDeleter(administratorsGroup, LocalFree);  //Use LocalFree to free the SID
+    std::unique_ptr<void, decltype(&LocalFree)> sidDeleter(administratorsGroup, LocalFree);  
 
     if (!CheckTokenMembership(NULL, administratorsGroup, &isAdmin)) {
         std::cerr << "Error checking token membership: " << getErrorMessage(GetLastError()) << std::endl;
@@ -123,7 +123,7 @@ bool openRegistryKey(HKEY parentKey, const wchar_t* subKeyPath, RegKey& openedKe
         return false;
     }
 
-    openedKey = RegKey(hKey); // Take ownership of the key.
+    openedKey = RegKey(hKey); 
     return true;
 }
 
